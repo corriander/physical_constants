@@ -20,3 +20,16 @@ project:
   - It may be desirable to maintain references to a specific dataset
     in a revision-controlled codebase, something less easy to do if
 	the dataset is managed as an external package.
+
+TODO
+----
+
+This is going to start simple and be extended iteratively as and when
+I find a personal need.
+
+  - Parser for the [NIST database](http://physics.nist.gov/cuu/Constants/Table/allascii.txt).
+  - Subset categories.
+  - Subset specification.
+  - Choice of data serialisation.
+
+
