@@ -2,7 +2,7 @@ Physical Constants
 ==================
 
 A language-independent, customisable library of fundamental physical
-constants sourced from [NIST]().
+constants sourced from [NIST](http://physics.nist.gov/cuu/Constants/).
 
 This is a little bit wheel-reinventy, there are libraries/packages out
 there that process the very same data I'm going to. However, one
