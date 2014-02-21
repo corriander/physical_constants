@@ -65,5 +65,4 @@ class Parser(object):
 					replace('(exact)', '0')),
 			'units' : record.units
 			}
-
 		return PhysicalConstant(**kwargs)
