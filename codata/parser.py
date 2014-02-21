@@ -1,4 +1,5 @@
 import re
+import os
 from collections import namedtuple
 
 Record = namedtuple('CODATARecord', 'name, value, uncertainty, units')
@@ -7,7 +8,11 @@ PhysicalConstant = namedtuple('PhysicalConstant', Record._fields)
 class Parser(object):
 	"""Parse NIST CODATA ASCII table"""
 
-	path = 'codata/data/2002CODATA.txt'
+	def __init__(self, version=2010):
+		self.path = 'codata/data/%sCODATA.txt' % version
+		if not os.path.isfile(self.path): 
+			raise ValueError(
+				"%s is not a recognised CODATA version." % version)
 
 	def read(self):
 		"""Return records from CODATA table as a list."""
