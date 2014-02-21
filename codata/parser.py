@@ -1,3 +1,5 @@
+import re
+
 class Parser(object):
 	"""Parse NIST CODATA ASCII table"""
 
@@ -12,3 +14,11 @@ class Parser(object):
 				if line.startswith('-----'):
 					in_table = True
 			return dat.readlines()
+	
+	def _parse_columns(self):
+		# Split table into columns via regex
+		regex = re.compile(r'\s{2,}')    # Contiguous whitespace
+		l = []
+		for row in self.read():
+			l.append(tuple(regex.split(row)))
+		return l    # List of tuples
