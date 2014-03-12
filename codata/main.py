@@ -45,4 +45,5 @@ class CODATA(object):
 
 if __name__ == '__main__':
 	codata = CODATA()
-	print codata.constants
+	for constant in codata.constants:
+		print constant
