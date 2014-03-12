@@ -1,11 +1,10 @@
 import csv
 import os
-from codata.parser import Parser
 
 class Writer(object):
 	"""Writer for the CODATA physical constants dataset."""
-	def __init__(self, version=2010):
-		self.parser = Parser(version)
+	def __init__(self, constants):
+		self.constants = constants
 	
 	def write_csv(self, path):
 		"""Write dataset to a comma-separated-value data file."""
@@ -16,4 +15,4 @@ class Writer(object):
 					csvfile,
 					quoting=csv.QUOTE_NONNUMERIC
 					)
-			csv_writer.writerows(self.parser.constants)
+			csv_writer.writerows(self.constants)
