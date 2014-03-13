@@ -4,26 +4,16 @@ from collections import namedtuple
 
 PhysicalConstant = namedtuple('PhysicalConstant',
 							  'name, value, uncertainty, units')
-class CODATA(object):
+class CODATA(dict):
 	"""Parse NIST CODATA ASCII table"""
 
 	def __init__(self, version=2010):
 		self.parser = Parser(version)
-		self._constants = map(self._convert, self.parser.records)
-		self.writer = Writer(self._constants)
-
-	@property
-	def constants(self):
-		"""CODATA fundamental physical constants.
-
-		CODATA internally recommended values of the fundamental
-		physical constants represented as appropriate data types.
-		Pretty-printed numerical strings have been turned into valid
-		floats with non-numerical components removed/replaced.
-
-		"""
-		return self._constants
-
+		self._list = map(self._convert, self.parser.records)
+		for constant in self._list:
+			self[constant.name] = constant
+		# self.writer = Writer(self._constants)
+	
 	@staticmethod
 	def _convert(record):
 		# Convert Record --> PhysicalConstant.
@@ -45,5 +35,8 @@ class CODATA(object):
 
 if __name__ == '__main__':
 	codata = CODATA()
-	for constant in codata.constants:
+	for constant in sorted(
+			codata.values(),
+			key=lambda c: c.name.lower().replace('{', '')
+			):
 		print constant
