@@ -27,9 +27,8 @@ TODO
 This is going to start simple and be extended iteratively as and when
 I find a personal need.
 
-  - Parser for the [NIST database](http://physics.nist.gov/cuu/Constants/Table/allascii.txt).
   - Subset categories.
   - Subset specification.
-  - Choice of data serialisation.
+  - More data format choices.
 
 
