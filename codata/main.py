@@ -42,6 +42,10 @@ class CODATA(dict):
 					 for name, obj in self.items() 
 					 if string in name
 					 )
+	
+	def write(self, syntax):
+		"""Write constants subset to STDOUT in syntax"""
+		self.writer.write(syntax, self.subset)
 
 	@staticmethod
 	def _convert(record):
