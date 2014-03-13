@@ -10,10 +10,9 @@ class CODATA(dict):
 
 	def __init__(self, version=2010):
 		self.parser = Parser(version)
-		self._list = map(self._convert, self.parser.records)
-		for constant in self._list:
+		for constant in map(self._convert, self.parser.records):
 			self[constant.name] = constant
-		# self.writer = Writer(self._constants)
+		self.writer = Writer()
 
 	def find_strings(self, strings):
 		"""Constants with one of many specified strings in name"""
