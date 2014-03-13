@@ -14,6 +14,13 @@ class CODATA(dict):
 			self[constant.name] = constant
 		# self.writer = Writer(self._constants)
 	
+	def find_string(self, string):
+		"""Return CODATA physical constants containing substring"""
+		return [obj 
+				for name, obj in self.items() 
+				if string in name
+				]
+	
 	@staticmethod
 	def _convert(record):
 		# Convert Record --> PhysicalConstant.
