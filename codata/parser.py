@@ -22,7 +22,7 @@ class Parser(object):
 				line = dat.readline()
 				if line.startswith('-----'):
 					in_table = True
-			return dat.readlines()
+			return [line.rstrip('\n') for line in dat.readlines()]
 
 	@property
 	def records(self):
