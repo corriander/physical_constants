@@ -66,4 +66,7 @@ class Writer(object):
 				element.text = str(getattr(constant, attr))
 		_indentxml(root)
 		with f:
-			etree.ElementTree(root).write(f)
+			etree.ElementTree(root).write(f,
+										  xml_declaration=True,
+										  encoding='utf-8',
+										  method='xml')
