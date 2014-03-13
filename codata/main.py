@@ -2,12 +2,11 @@ import sys
 from writer import Writer
 from parser import Parser
 from options import Options
+from constant import PhysicalConstant
 from collections import namedtuple
 from collections import Sequence as SeqABC
 from itertools import chain
 
-PhysicalConstant = namedtuple('PhysicalConstant',
-							  'name, value, uncertainty, units')
 class CODATA(dict):
 	"""NIST CODATA physical constants with dict-like access"""
 

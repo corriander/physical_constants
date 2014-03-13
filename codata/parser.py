@@ -1,9 +1,9 @@
 import re
 import os
 from collections import namedtuple
+from constant import PhysicalConstant 
 
-Record = namedtuple('CODATARecord', 'name, value, uncertainty, units')
-PhysicalConstant = namedtuple('PhysicalConstant', Record._fields)
+Record = namedtuple('CODATARecord', PhysicalConstant._fields)
 
 class Parser(object):
 	"""Parse NIST CODATA ASCII table"""
@@ -35,34 +35,3 @@ class Parser(object):
 		"""
 		regex = re.compile(r'\s{2,}')    # Contiguous whitespace
 		return map(Record._make, map(regex.split, self.read()))
-
-	@property
-	def constants(self):
-		"""CODATA fundamental physical constants.
-
-		CODATA internally recommended values of the fundamental
-		physical constants represented as appropriate data types.
-		Pretty-printed numerical strings have been turned into valid
-		floats with non-numerical components removed/replaced.
-
-		"""
-		return map(self._convert, self.records)
-
-	@staticmethod
-	def _convert(record):
-		# Convert Record --> PhysicalConstant.
-		#
-		# Performs some string substitutions and changes type.
-		kwargs = {
-			'name' : record.name,
-			# Value strings have inter-digit spacing and ellipses in
-			# the case of irrational numbers.
-			'value' : float(record.value.replace(' ', '').\
-					replace('...', '')),
-			# Uncertainties have inter-digit spacing and exact values
-			# are denoted by (exact), this can be changed to 0
-			'uncertainty' : float(record.uncertainty.replace(' ', '').\
-					replace('(exact)', '0')),
-			'units' : record.units
-			}
-		return PhysicalConstant(**kwargs)
