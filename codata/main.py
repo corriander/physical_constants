@@ -1,5 +1,7 @@
+import sys 
 from writer import Writer
 from parser import Parser
+from options import Options
 from collections import namedtuple
 from collections import Sequence as SeqABC
 from itertools import chain
@@ -29,14 +31,13 @@ class CODATA(dict):
 								 "objects exclusively of type "
 								 "<codata.main.PhysicalConstant>")
 		self._subset = seq
-	
 
 	def find_strings(self, strings):
 		"""Constants with one of many specified strings in name"""
-		matches = tuple(self.find_string(s) for s in strings)
-		return tuple(set(chain.from_iterable(matches)))
+		matches = tuple(self._find_string(s) for s in strings)
+		self.subset = tuple(set(chain.from_iterable(matches)))
 	
-	def find_string(self, string):
+	def _find_string(self, string):
 		"""Constants with a specified string in name"""
 		return tuple(obj 
 					 for name, obj in self.items() 
@@ -67,9 +68,13 @@ class CODATA(dict):
 		return PhysicalConstant(**kwargs)
 
 if __name__ == '__main__':
-	codata = CODATA()
-	for constant in sorted(
-			codata.values(),
-			key=lambda c: c.name.lower().replace('{', '')
-			):
-		print constant
+	c = CODATA()
+	options = Options().parse(sys.argv[1:])
+	if options.substrings:
+		c.find_strings(options.substrings)
+	else:
+		c.subset = sorted(
+				c.values(),
+				key=lambda c: c.name.lower().replace('{', '')
+				)
+	c.write(options.format)
