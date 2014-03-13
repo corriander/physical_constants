@@ -1,11 +1,12 @@
 from writer import Writer
 from parser import Parser
 from collections import namedtuple
+from itertools import chain
 
 PhysicalConstant = namedtuple('PhysicalConstant',
 							  'name, value, uncertainty, units')
 class CODATA(dict):
-	"""Parse NIST CODATA ASCII table"""
+	"""NIST CODATA physical constants with dict-like access"""
 
 	def __init__(self, version=2010):
 		self.parser = Parser(version)
@@ -13,13 +14,18 @@ class CODATA(dict):
 		for constant in self._list:
 			self[constant.name] = constant
 		# self.writer = Writer(self._constants)
+
+	def find_strings(self, strings):
+		"""Constants with one of many specified strings in name"""
+		matches = tuple(self.find_string(s) for s in strings)
+		return tuple(set(chain.from_iterable(matches)))
 	
 	def find_string(self, string):
-		"""Return CODATA physical constants containing substring"""
-		return [obj 
-				for name, obj in self.items() 
-				if string in name
-				]
+		"""Constants with a specified string in name"""
+		return tuple(obj 
+					 for name, obj in self.items() 
+					 if string in name
+					 )
 	
 	@staticmethod
 	def _convert(record):
