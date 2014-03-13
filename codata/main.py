@@ -1,6 +1,7 @@
 from writer import Writer
 from parser import Parser
 from collections import namedtuple
+from collections import Sequence as SeqABC
 from itertools import chain
 
 PhysicalConstant = namedtuple('PhysicalConstant',
@@ -14,6 +15,22 @@ class CODATA(dict):
 			self[constant.name] = constant
 		self.writer = Writer()
 
+	@property
+	def subset(self):
+		"""Subset of physical constants"""
+		return self._subset
+	@subset.setter
+	def subset(self, seq):
+		if not isinstance(seq, SeqABC):
+			raise ValueError("subset must be a sequence")
+		for item in seq:
+			if not isinstance(item, PhysicalConstant):
+				raise ValueError("subset sequence must contain "
+								 "objects exclusively of type "
+								 "<codata.main.PhysicalConstant>")
+		self._subset = seq
+	
+
 	def find_strings(self, strings):
 		"""Constants with one of many specified strings in name"""
 		matches = tuple(self.find_string(s) for s in strings)
@@ -25,7 +42,7 @@ class CODATA(dict):
 					 for name, obj in self.items() 
 					 if string in name
 					 )
-	
+
 	@staticmethod
 	def _convert(record):
 		# Convert Record --> PhysicalConstant.
