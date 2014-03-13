@@ -68,8 +68,8 @@ class CODATA(dict):
 		return PhysicalConstant(**kwargs)
 
 if __name__ == '__main__':
-	c = CODATA()
 	options = Options().parse(sys.argv[1:])
+	c = CODATA(options.codataversion)
 	if options.substrings:
 		c.find_strings(options.substrings)
 	else:

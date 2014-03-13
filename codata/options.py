@@ -18,6 +18,12 @@ class Options(object):
 									dest='substrings',
 									nargs='*',
 									help='Search strings')
+		self.argparser.add_argument('-y',
+									'--year',
+									default=2010,
+									type=int,
+									dest='codataversion',
+									help='CODATA version')
 
 	def parse(self, args=None):
 		"""Parse the CLI options"""
