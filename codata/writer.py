@@ -3,10 +3,8 @@ import os
 
 class Writer(object):
 	"""Writer for the CODATA physical constants dataset."""
-	def __init__(self, constants):
-		self.constants = constants
 	
-	def write_csv(self, path):
+	def write_csv(self, constants, path=None):
 		"""Write dataset to a comma-separated-value data file."""
 		if os.path.isfile(path):
 			raise IOError("File exists")
