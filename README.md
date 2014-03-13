@@ -21,11 +21,43 @@ project:
     in a revision-controlled codebase, something less easy to do if
 	the dataset is managed as an external package.
 
+Dependencies
+------------
+
+None, standard library only.
+
+Usage
+-----
+
+The following assuumes `bin/codata` is in the system `PATH`.
+
+The utility currently writes to `STDOUT`, so for now it's for use with
+pipes and redirection:
+
+	codata > /path/to/output/file
+
+Search constants database for substrings. This is not intelligent, so
+if you want a specific constant it's best to make sure the substring
+is unique to it via quotation (note the usual shell behaviour of
+unpreserved spaces, so if the substring has spaces, it requires
+quote-delimiting).
+
+	codata -s light standard 'molar mass constant'
+
+Different output formats can be selected, currently CSV and XML:
+
+	codata -f xml 'standard-state pressure'
+	codata -f csv 'standard-state pressure'
+
+CSV is the default at the moment, but will be replaced by a plain text
+representation at Some Point(tm). The XML is rough and ready but
+should be enough for now.
+
 TODO
 ----
 
-This is going to start simple and be extended iteratively as and when
-I find a personal need.
+This is going to start simple and be extended incrementally as and
+when I find a personal need.
 
   - Subset categories.
   - Subset specification.
