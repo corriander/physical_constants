@@ -1,4 +1,6 @@
 #!/bin/bash
 
-BINPATH=`dirname $0`
+# The following is GNU-compliant, for other "real" path resolution
+# methods see http://stackoverflow.com/q/4774054/2921610
+BINPATH="$(dirname "$(readlink -e "$0")")"
 python "$BINPATH/../codata/main.py" "$@"
