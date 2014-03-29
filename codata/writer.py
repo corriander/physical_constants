@@ -60,8 +60,10 @@ class Writer(object):
 		f = _file_object(path)
 		root = etree.Element('PhysicalConstantSet')
 		for constant in constants:
-			croot = etree.SubElement(root, 'PhysicalConstant')
-			for attr in constant._fields:
+			croot = etree.SubElement(root, 
+									 'PhysicalConstant',
+									 attrib={'name' : constant.name})
+			for attr in constant._fields[1:]:
 				element = etree.SubElement(croot, attr)
 				element.text = str(getattr(constant, attr))
 		_indentxml(root)
