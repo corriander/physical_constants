@@ -34,7 +34,7 @@ def _indentxml(elem, level=0):
 class Writer(object):
 	"""Writer for the CODATA physical constants dataset."""
 
-	supported_syntax = ('csv', 'xml')
+	supported_syntax = ('csv', 'xml', 'xmle')
 
 	def write(self, syntax, constants, path=None):
 		"""Write constants in syntax to STDOUT or path if specified"""
@@ -72,3 +72,9 @@ class Writer(object):
 										  xml_declaration=True,
 										  encoding='utf-8',
 										  method='xml')
+	
+	@staticmethod
+	def _write_xmle(constants, path):
+		# Write dataset as XML elements sequence (no root/declaration)
+		f = _file_object(path, 'w+')
+		with f:	map(lambda c: f.write(c.toxml()), constants)
