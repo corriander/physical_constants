@@ -34,13 +34,14 @@ def _indentxml(elem, level=0):
 class Writer(object):
 	"""Writer for the CODATA physical constants dataset."""
 
-	supported_syntax = ('csv', 'xml', 'xmle')
-
 	def write(self, syntax, constants, path=None):
 		"""Write constants in syntax to STDOUT or path if specified"""
-		if syntax not in self.supported_syntax:
-			raise ValueError("Unrecognised syntax")
-		method = self.__getattribute__("_write_{!s}".format(syntax))
+		try:
+			name = "_write_{!s}".format(syntax)
+			method = self.__getattribute__(name)
+		except AttributeError as ae:
+			message = "Unrecognised syntax: '{}'".format(syntax)
+			raise ValueError(message)
 		method(constants, path)
 
 	@staticmethod
